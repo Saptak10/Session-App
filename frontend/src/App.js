@@ -22,10 +22,10 @@ function App() {
           <Route path="/login" element={<Login />} exact />
           <Route path="/register" element={<Register />} exact />
           <Route path="/add" element={<AddSession />} exact />
-          <Route path="/books" element={<Books />} exact />
+          {/* <Route path="/books" element={<Books />} exact /> */}
           <Route path="/dashboard" element={<Dashboard />} exact />
           {/* <Route path="/about" element={<About />} exact /> */}
-          <Route path="/books/:id" element={<BookDetail />} exact />
+          {/* <Route path="/books/:id" element={<BookDetail />} exact /> */}
         </Routes>
       </main>
     </React.Fragment>

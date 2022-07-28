@@ -2,12 +2,8 @@ import {
     Button,
     Checkbox,
     TextField,
-    FormControlLabel,
     FormLabel,
     Autocomplete,
-    Radio,
-    RadioGroup,
-    Stack
   } from "@mui/material";
 
   import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -22,8 +18,6 @@ import {
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-
-import Appointment from './Appointment';
 
 import courseList from "./Courses.js";
 
@@ -84,40 +78,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
           marginRight="auto"
           marginTop={10}
         >
-          {/* <TextField
-            value={inputs.name}
-            onChange={handleChange}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            name="name"
-          /> */}
-              {/* <Stack spacing={2} sx={{ width: 300 }}>
-          <Autocomplete
-            // id="free-solo-demo"
-            freeSolo
-            options={timeDuration.map((option) => option.label)}
-            renderInput={(params) => <TextField {...params} label="startTime" />}
-            name="startTime"
-          />
-          <Autocomplete
-            freeSolo
-            // id="free-solo-2-demo"
-            disableClearable
-            options={timeDuration.map((option) => option.label)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="endTime"
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-                name="endTime"
-              />
-            )}
-          />
-        </Stack> */}
+
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <FormLabel>Start Time</FormLabel>
 
@@ -134,34 +95,6 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
           />
     </LocalizationProvider>
       
-          {/* <Appointment></Appointment> */}
-          {/* <input id="time" type="text" value="10:00"></input> */}
-          <FormLabel>Duration</FormLabel>
-          {/* <TextField
-            value={inputs.Duration}
-            onChange={handleChange}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            name="author"
-          /> */}
-          {/* <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={timeDuration}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="duration" />}
-          /> */}
-          {/* <FormLabel>Courses</FormLabel>
-          <TextField
-            value={inputs.description}
-            onChange={handleChange}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            name="description"
-          /> */}
-
       <FormLabel>Choose your courses</FormLabel>
         <Autocomplete
             multiple
@@ -195,17 +128,5 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
     );
   };
 
-  // const timeDuration = [
-  //   { label: 30, price: 2000 },
-  //   { label: 40, price: 3000 },
-  //   { label: 60, price: 4500 },
-  // ];
-
-  // const time = [
-  //   { label: 30 },
-  //   { label: 40 },
-  //   { label: 60 },
-  // ];
-  
   export default AddSession;
   
