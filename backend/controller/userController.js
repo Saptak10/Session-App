@@ -10,16 +10,16 @@ module.exports.loginUser = (req, res)=> {
                 res.render('error',{ message : 'Login Failed, You need to register first!.'});
                 return;
             } else{
-                // if(user.type == "mentor")
-                // {
-                // //   res.redirect('/student_course');
-                //     res.send({ user: user });
-                // }
-                // else if(user.type == "student")
-                // {
-                // //   res.redirect('/course_enroll');
-                //     res.send({ user: user })
-                // }
+                if(user.type == "mentor")
+                {
+                //   res.redirect('/student_course');
+                    res.send({ user: user });
+                }
+                else if(user.type == "student")
+                {
+                //   res.redirect('/course_enroll');
+                    res.send({ user: user })
+                }
                 console.log("Success");
                  res.status(200);
 

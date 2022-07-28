@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Table, TableHead, TableCell, 
     TableRow, TableBody, Button, makeStyles } from '@material-ui/core';
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from '@material-ui/icons/Edit';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-// import { getTodos, deleteTodo } from '../../Routes/TodoDBApi';
 import { Link } from 'react-router-dom';
+import { getSession } from '../api/sessionApi';
 
 const useStyles = makeStyles({
     table: {
@@ -27,29 +24,19 @@ const useStyles = makeStyles({
     }
 })
 
-// const useFontStyles = makeStyles({
-//     todoFont:{
-//         fontSize: 'larger'
-//     }
-// })
-
 const Dashboard = () => {
-    const [todos, setTodos] = useState([]);
+
+    const [sessions, setSession] = useState([]);
+
     const classes = useStyles();
-    // const classesFont = useStyles();
 
     useEffect(() => {
-        getAllTodos();
+        getAllSession();
     }, []);
 
-    const deleteTodoData = async (id) => {
-        // await deleteTodo(id);
-        getAllTodos();
-    }
-
-    const getAllTodos = async () => {
-        // let response = await getTodos();
-        // setTodos(response.data);
+    const getAllSession = async () => {
+        let response = await getSession();
+        setSession(response.data);
     }
 
     return (
@@ -58,27 +45,22 @@ const Dashboard = () => {
                 <TableRow className={classes.thead} >
                     <TableCell>Mentor Name</TableCell>
                     <TableCell>Date</TableCell>
-                    <TableCell>Start</TableCell>
-                    <TableCell>End</TableCell>
+                    <TableCell>Available From</TableCell>
+                    <TableCell>Till</TableCell>
                     <TableCell>Course</TableCell>
                     <TableCell>Duration</TableCell>
                     <TableCell>Book</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {todos.map((todo) => (
-                    <TableRow className={classes.row} key={todo.id}>
-                        <TableCell>{todo._id}</TableCell> {/* change it to todo.id to use JSON Server */}
-                        <TableCell>{todo.Title}</TableCell>
-                        <TableCell>{todo.Description}</TableCell>
+                {sessions.map((session) => (
+                    <TableRow className={classes.row} key={session.id}>
+                        <TableCell>{session._id}</TableCell>
+                        <TableCell>{session.Title}</TableCell>
+                        <TableCell>{session.Description}</TableCell>
                         <TableCell>
-                            <Button color="primary" variant="contained" component={Link} to={`/edit/${todo._id}`}><EditIcon /></Button> {/* change it to user.id to use JSON Server */}
+                            <Button color="primary" variant="contained" component={Link} to={`/edit/${session._id}`}><AddCircleIcon /></Button>
                         </TableCell>
-                        <TableCell>
-                            <Button color="secondary" variant="contained" onClick={() => deleteTodoData(todo._id)}><DeleteIcon /></Button> {/* change it to user.id to use JSON Server */}
-                        </TableCell>
-                        <TableCell><Button color="primary"><AddCircleIcon /></Button><Button color="secondary" ><RemoveCircleIcon /></Button></TableCell>
-                        {/* <TableCell><Button variant="outlined" color="primary" onClick={fontSizeIncrease(todo.id)}>+</Button> <Button variant="outlined" color="primary" onClick={fontSizeDecrease(todo.id)}>-</Button></TableCell> */}
                     </TableRow>
                 ))}
             </TableBody>

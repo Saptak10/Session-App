@@ -7,3 +7,9 @@ export const sessionForm = async (session) => {
     return await axios.post(`${SessionUrl}/`, {session})
       .then((res) => res.data);
 }
+
+export const getSession = async (session) => {
+  console.log(session);
+  return await axios.post(`${SessionUrl}/`, {session})
+    .then((res) => res.data);
+}
