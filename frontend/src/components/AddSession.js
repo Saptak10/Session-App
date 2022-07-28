@@ -145,13 +145,13 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
             variant="outlined"
             name="author"
           /> */}
-          <Autocomplete
+          {/* <Autocomplete
             disablePortal
             id="combo-box-demo"
             options={timeDuration}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="duration" />}
-          />
+          /> */}
           {/* <FormLabel>Courses</FormLabel>
           <TextField
             value={inputs.description}
@@ -195,17 +195,17 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
     );
   };
 
-  const timeDuration = [
-    { label: 30, price: 2000 },
-    { label: 40, price: 3000 },
-    { label: 60, price: 4500 },
-  ];
+  // const timeDuration = [
+  //   { label: 30, price: 2000 },
+  //   { label: 40, price: 3000 },
+  //   { label: 60, price: 4500 },
+  // ];
 
-  const time = [
-    { label: 30 },
-    { label: 40 },
-    { label: 60 },
-  ];
+  // const time = [
+  //   { label: 30 },
+  //   { label: 40 },
+  //   { label: 60 },
+  // ];
   
   export default AddSession;
   
