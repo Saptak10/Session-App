@@ -7,7 +7,6 @@ const Payment = () => {
 	const [session, setSession] = useState({
 		name: "Demo",
 		course: "Commerce",
-        img: "https://images-na.ssl-images-amazon.com/images/I/817tHNcyAgL.jpg",
 		duration: 30,
 		price: 2000,
 	});
@@ -51,7 +50,6 @@ const Payment = () => {
 	return (
 		<div className="App">
 			<div className="session_container">
-				<img src={session.img} alt="session_img" className="session_img" />
 				<p className="session_name">{session.name}</p>
 				<p className="session_author">By {session.course}</p>
 				<p className="session_price">
