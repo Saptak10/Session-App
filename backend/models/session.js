@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Session = new Schema({
-	time: String,
-	duration: String,
+	date: String,
+	start: String,
+	end: String,
 	course: [String],
-
 });
 
 const Session = new mongoose.model('Session', Session);

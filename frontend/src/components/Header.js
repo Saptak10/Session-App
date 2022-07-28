@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AppBar, Tab, Tabs, Toolbar, Typography } from "@mui/material";
-import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
+// import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import { NavLink } from "react-router-dom";
 const Header = () => {
   const [value, setValue] = useState();
@@ -8,11 +8,11 @@ const Header = () => {
     <div>
       <AppBar sx={{ backgroundColor: "#232F3D" }} position="sticky">
         <Toolbar>
-          {/* <NavLink to="/" style={{ color: "white" }}>
+          <NavLink to="/" style={{ text:"center",color: "white" }}>
             <Typography>
-              <LibraryBooksOutlinedIcon />
+                One on One Session
             </Typography>
-          </NavLink> */}
+          </NavLink>
           <Tabs
             sx={{ ml: "auto" }}
             textColor="inherit"
@@ -23,7 +23,7 @@ const Header = () => {
             <Tab LinkComponent={NavLink} to="/login" label="Login" />
             <Tab LinkComponent={NavLink} to="/register" label="Register" />
             <Tab LinkComponent={NavLink} to="/add" label="Add Session" />
-            <Tab LinkComponent={NavLink} to="/dashboard" label="Dashboard" />
+            <Tab LinkComponent={NavLink} to="/" label="Dashboard" />
           </Tabs>
         </Toolbar>
       </AppBar>

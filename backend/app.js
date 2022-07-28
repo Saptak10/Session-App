@@ -22,9 +22,10 @@ mongoose.connect(DBAPI, {
         console.log(err)
     })
 
+const sessionRoutes = require('./routes/sessionRoute');
 const userRoutes = require('./routes/userRoute');
+const paymentRoutes = require("./routes/paymentRoute.js");
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -35,7 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 // app.use('/', dashboardRoute)
-// app.use('/', paymentRoutes)
+
+app.use("/api/payment/", paymentRoutes);
+app.use('/', sessionRoutes)
 app.use('/', userRoutes)
 
 const port = 5000;

@@ -3,8 +3,7 @@ var Schema = mongoose.Schema;
 
 const userSchema = new Schema({
 	  name: String,
-    // type: String,
-    // courses: [String],
+    type: String,
 });
 
 const User = mongoose.model('User', userSchema);

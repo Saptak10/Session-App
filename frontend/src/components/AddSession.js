@@ -9,10 +9,12 @@ import {
   import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
   import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
+  import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+
   import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
   import { Box } from "@mui/system";
-  import axios from "axios";
   import React, { useState } from "react";
   import { useNavigate } from "react-router-dom";
 
@@ -21,49 +23,66 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import courseList from "./Courses.js";
 
+import { sessionForm } from '../api/sessionApi';
+
+// const initialValue = {
+//   date: new Date('2014-08-18T21:11:54'),
+//   start: new Date('2014-08-18T21:11:54'),
+//   end: new Date('2014-08-18T21:11:54'),
+//   // courses:{
+//   //   id: 0,
+//   //   label:""
+//   // },
+//   // courses:[]
+//   }
+
+// const courses = {}
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
   const AddSession = () => {
     const history = useNavigate();
-    const [inputs, setInputs] = useState({
-      name: "",
-      description: "",
-      price: "",
-      author: "",
-    });
-    const [checked, setChecked] = useState(false);
-    const handleChange = (e) => {
-      setInputs((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }));
-      // console.log(e.target.name, "Value", e.target.value);
+    // const [session, setSession] = useState({initialValue});
+
+    const [date, setDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [start, setStart] = useState(new Date('2014-08-18T21:11:54'));
+    const [end, setEnd] = useState(new Date('2014-08-18T21:11:54'));
+
+    const handleChangeDate = (e) => {
+      setDate(e);
     };
-  
-    const sendRequest = async () => {
-      await axios
-        .post("http://localhost:5000/books", {
-          name: String(inputs.name),
-          author: String(inputs.author),
-          description: String(inputs.description),
-          price: Number(inputs.price),
-        })
-        .then((res) => res.data);
+
+    const handleChangeStart = (e) => {
+      setStart(e);
     };
-  
-    const handleSubmit = (e) => {
+
+    const handleChangeEnd = (e) => {
+      setEnd(e);
+      console.log(e);
+    };
+
+    // const { start, end,courses } = session;
+    // const { date, start, end } = session;
+    // const [courses] = session;
+    // const {id,label} = courses;
+    // console.log(courses);
+    // const [ courses ] = session;
+    // const [checked, setChecked] = useState(false);
+    
+    // const handleChange = (e) => {
+    //   setSession((prevState) => ({...prevState,[e.target.name]: e.target.value,}));
+    //   console.log(e.target.name, "Value", e.target.value);
+    // };
+
+    const handleSubmit = async(e) => {
+      const session = {date,start,end};
+      console.log(e);
       e.preventDefault();
-      console.log(inputs, checked);
-      sendRequest().then(() => history("/books"));
+      await sessionForm(session);
+      // console.log(user);
+        history("/dashboard");
     };
-
-    const [value, setValue] = useState(new Date('2014-08-18T21:11:54'));
-
-    const handleDT = (newValue) => {
-      setValue(newValue);
-    };
-
   
     return (
       <form onSubmit={handleSubmit}>
@@ -78,21 +97,44 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
           marginRight="auto"
           marginTop={10}
         >
-
+    <FormLabel>Mention your availability</FormLabel>
     <LocalizationProvider dateAdapter={AdapterMoment}>
-      <FormLabel>Start Time</FormLabel>
 
-          <DateTimePicker
-            value={value}
-            onChange={handleDT}
-            renderInput={(params) => <TextField {...params} />}
+          {/* <DateTimePicker
+            // value={start}
+            // onChange={handleChange}
+            // name="start"
+            renderInput={(params) => <TextField name="start" {...params} />}
           />
         <FormLabel>End Time</FormLabel>
           <DateTimePicker
-            value={value}
-            onChange={handleDT}
+            // value={end}
+            // onChange={handleChange}
+            name="end"
+            renderInput={(params) => <TextField {...params} />}
+          /> */}
+          <FormLabel>Date</FormLabel>
+          <DesktopDatePicker
+            label="Date desktop"
+            inputFormat="MM/dd/yyyy"
+            value={date}
+            onChange={handleChangeDate}
             renderInput={(params) => <TextField {...params} />}
           />
+          <FormLabel>Start Time</FormLabel>
+        <TimePicker
+          label="start"
+          value={start}
+          onChange={handleChangeStart}
+          renderInput={(params) => <TextField {...params} />}
+        />
+        <FormLabel>End Time</FormLabel>
+        <TimePicker
+          label="end"
+          value={end}
+          onChange={handleChangeEnd}
+          renderInput={(params) => <TextField {...params} />}
+        />
     </LocalizationProvider>
       
       <FormLabel>Choose your courses</FormLabel>
@@ -101,6 +143,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
             id="checkboxes-tags-demo"
             options={courseList}
             disableCloseOnSelect
+            // value = {id}
+            // onChange={handleChange}
             getOptionLabel={(option) => option.title}
             renderOption={(props, option, { selected }) => (
                 <li {...props}>
@@ -110,13 +154,18 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                     style={{ marginRight: 8 }}
                     checked={selected}
                     name="courses"
+                    // value = {label}
+                    // onChange={handleChange}
                 />
                 {option.title}
                 </li>
             )}
             // style={{ width: 500 }}
             renderInput={(params) => (
-                <TextField {...params} label="Courses" placeholder="Favorites" />
+                <TextField 
+                // value = {courses} 
+                // onChange={handleChange}
+                {...params} label="Courses" placeholder="Favorites" />
             )}
             />
   
