@@ -7,4 +7,3 @@ export const sessionForm = async (session) => {
     return await axios.post(`${SessionUrl}/`, {session})
       .then((res) => res.data);
 }
-

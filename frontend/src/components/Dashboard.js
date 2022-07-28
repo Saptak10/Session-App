@@ -37,21 +37,6 @@ const Dashboard = () => {
     const [todos, setTodos] = useState([]);
     const classes = useStyles();
     // const classesFont = useStyles();
-    var today = new Date();
-    
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = mm + '/' + dd + '/' + yyyy;
-    // console.log(today);
-    // constructor() {
-    //     var today = new Date(),  
-    //     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    //     this.state = {  
-    //       currentDate: date   
-    //     }
-    // }
 
     useEffect(() => {
         getAllTodos();
@@ -67,25 +52,17 @@ const Dashboard = () => {
         // setTodos(response.data);
     }
 
-    // const fontSizeIncrease = () => {
-    //     const fontClasses = useFontStyles();
-    // }
-
-    // const fontSizeDecrease = () => {
-    //     const fontClasses = useFontStyles();
-    // }
-
     return (
         <Table className={classes.table}>
             <TableHead>
                 <TableRow className={classes.thead} >
                     <TableCell>Mentor Name</TableCell>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Edit</TableCell>
-                    <TableCell>Delete</TableCell>
                     <TableCell>Date</TableCell>
-                    <TableCell>Font Size</TableCell>
+                    <TableCell>Start</TableCell>
+                    <TableCell>End</TableCell>
+                    <TableCell>Course</TableCell>
+                    <TableCell>Duration</TableCell>
+                    <TableCell>Book</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -100,7 +77,6 @@ const Dashboard = () => {
                         <TableCell>
                             <Button color="secondary" variant="contained" onClick={() => deleteTodoData(todo._id)}><DeleteIcon /></Button> {/* change it to user.id to use JSON Server */}
                         </TableCell>
-                        <TableCell>Created on { today }</TableCell>
                         <TableCell><Button color="primary"><AddCircleIcon /></Button><Button color="secondary" ><RemoveCircleIcon /></Button></TableCell>
                         {/* <TableCell><Button variant="outlined" color="primary" onClick={fontSizeIncrease(todo.id)}>+</Button> <Button variant="outlined" color="primary" onClick={fontSizeDecrease(todo.id)}>-</Button></TableCell> */}
                     </TableRow>

@@ -13,4 +13,3 @@ export const loginForm = async (user) => {
     return await axios.post(`${UsersUrl}/login`, {user})
       .then((res) => res.data);
 }
-

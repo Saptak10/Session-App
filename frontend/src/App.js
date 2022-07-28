@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import AddSession from "./components/AddSession";
 import Dashboard from "./components/Dashboard";
+import Payment from "./components/Payment";
 function App() {
   return (
     <React.Fragment>
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} exact />
           <Route path="/register" element={<Register />} exact />
           <Route path="/add" element={<AddSession />} exact />
+          <Route path="/payment" element={<Payment />} exact />
         </Routes>
       </main>
     </React.Fragment>
