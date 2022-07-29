@@ -23,7 +23,6 @@ mongoose.connect(DBAPI, {
     })
 
 const sessionRoutes = require('./routes/sessionRoute');
-// const userRoutes = require('./routes/userRoute');
 const paymentRoutes = require('./routes/paymentRoute');
 
 app.set('views', path.join(__dirname, 'views'));
@@ -35,11 +34,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// app.use('/', dashboardRoute)
-
 app.use('/', sessionRoutes)
 app.use('/api/payment/', paymentRoutes);
-// app.use('/', userRoutes)
 
 const port = 5000;
 
