@@ -1,53 +1,80 @@
+import React, { useState } from "react";
 import {
     Button,
-    Checkbox,
     TextField,
     FormLabel,
-    Autocomplete,
+    Typography,
+    OutlinedInput,
+    InputLabel,
+    MenuItem,
+    Select,
+    Chip
   } from "@mui/material";
 
-  import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-  import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider,
+  TimePicker, 
+  DesktopDatePicker,
+   } from '@mui/x-date-pickers';
 
-  import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
-  import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { Box } from "@mui/system";
 
-  import { Box } from "@mui/system";
-  import React, { useState } from "react";
-  import { useNavigate } from "react-router-dom";
+import { useTheme } from '@mui/material/styles';
 
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { useNavigate } from "react-router-dom";
+
+import { postSession } from '../api/sessionApi';
 
 import courseList from "./Courses.js";
 
-import { sessionForm } from '../api/sessionApi';
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
-// const initialValue = {
-//   date: new Date('2014-08-18T21:11:54'),
-//   start: new Date('2014-08-18T21:11:54'),
-//   end: new Date('2014-08-18T21:11:54'),
-//   // courses:{
-//   //   id: 0,
-//   //   label:""
-//   // },
-//   // courses:[]
-//   }
+function getStyles(name, courseName, theme) {
+  return {
+    fontWeight:
+      courseName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
-// const courses = {}
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const initialValue = {
+  name: "",
+  date: new Date('2014-08-18T21:11:54'),
+  start: new Date('2014-08-18T21:11:54'),
+  end: new Date('2014-08-18T21:11:54'),
+  courses:[]
+  }
 
   const AddSession = () => {
-    const history = useNavigate();
-    // const [session, setSession] = useState({initialValue});
 
+    const [session, setSession] = useState({initialValue});
+    const [courseName, setCourseName] = React.useState([]);
     const [date, setDate] = useState(new Date('2014-08-18T21:11:54'));
     const [start, setStart] = useState(new Date('2014-08-18T21:11:54'));
     const [end, setEnd] = useState(new Date('2014-08-18T21:11:54'));
+    
+    const theme = useTheme();
+    const history = useNavigate();
+    
+    const handleCourseChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+      setCourseName(
+        typeof value === 'string' ? value.split(',') : value,
+      );
+    };
 
     const handleChangeDate = (e) => {
       setDate(e);
@@ -62,26 +89,20 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
       console.log(e);
     };
 
-    // const { start, end,courses } = session;
-    // const { date, start, end } = session;
-    // const [courses] = session;
-    // const {id,label} = courses;
-    // console.log(courses);
-    // const [ courses ] = session;
-    // const [checked, setChecked] = useState(false);
+    // const { name, date, start, end, courses } = session;
+    const { name } = session;
     
-    // const handleChange = (e) => {
-    //   setSession((prevState) => ({...prevState,[e.target.name]: e.target.value,}));
-    //   console.log(e.target.name, "Value", e.target.value);
-    // };
+    const handleChange = (e) => {
+      setSession((prevState) => ({...prevState,[e.target.name]: e.target.value,}));
+      console.log(e.target.name, "Value", e.target.value);
+    };
 
     const handleSubmit = async(e) => {
-      const session = {date,start,end};
+      const session = {name, date,start,end};
       console.log(e);
       e.preventDefault();
-      await sessionForm(session);
-      // console.log(user);
-        history("/dashboard");
+      await postSession(session);
+        history("/");
     };
   
     return (
@@ -97,79 +118,74 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
           marginRight="auto"
           marginTop={10}
         >
-    <FormLabel>Mention your availability</FormLabel>
-    <LocalizationProvider dateAdapter={AdapterMoment}>
-
-          {/* <DateTimePicker
-            // value={start}
-            // onChange={handleChange}
-            // name="start"
-            renderInput={(params) => <TextField name="start" {...params} />}
-          />
-        <FormLabel>End Time</FormLabel>
-          <DateTimePicker
-            // value={end}
-            // onChange={handleChange}
-            name="end"
-            renderInput={(params) => <TextField {...params} />}
-          /> */}
-          <FormLabel>Date</FormLabel>
-          <DesktopDatePicker
-            label="Date desktop"
-            inputFormat="MM/dd/yyyy"
-            value={date}
-            onChange={handleChangeDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <FormLabel>Start Time</FormLabel>
-        <TimePicker
-          label="start"
-          value={start}
-          onChange={handleChangeStart}
-          renderInput={(params) => <TextField {...params} />}
-        />
-        <FormLabel>End Time</FormLabel>
-        <TimePicker
-          label="end"
-          value={end}
-          onChange={handleChangeEnd}
-          renderInput={(params) => <TextField {...params} />}
-        />
-    </LocalizationProvider>
-      
-      <FormLabel>Choose your courses</FormLabel>
-        <Autocomplete
-            multiple
-            id="checkboxes-tags-demo"
-            options={courseList}
-            disableCloseOnSelect
-            // value = {id}
-            // onChange={handleChange}
-            getOptionLabel={(option) => option.title}
-            renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                    name="courses"
-                    // value = {label}
-                    // onChange={handleChange}
-                />
-                {option.title}
-                </li>
-            )}
-            // style={{ width: 500 }}
-            renderInput={(params) => (
-                <TextField 
-                // value = {courses} 
-                // onChange={handleChange}
-                {...params} label="Courses" placeholder="Favorites" />
-            )}
+          <Typography variant="h3" gutterBottom component="div">
+            Add the session
+          </Typography>
+          <FormLabel>Name</FormLabel>
+            <TextField
+              value={name}
+              onChange={handleChange}
+              margin="normal"
+              fullWidth
+              variant="outlined"
+              name="name"
             />
+            <FormLabel sx = {{marginTop: 2, marginBottom: 2}}>Mention your availability</FormLabel>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+
+                <DesktopDatePicker
+                  label="Date"
+                  inputFormat="MM/dd/yyyy"
+                  value={date}
+                  onChange={handleChangeDate}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <FormLabel sx = {{marginTop: 2, marginBottom: 2}}>Start Time</FormLabel>
+              <TimePicker
+                label="From"
+                value={start}
+                onChange={handleChangeStart}
+                renderInput={(params) => <TextField {...params} />}
+              />
+              <FormLabel sx = {{marginTop: 2, marginBottom: 2}}>End Time</FormLabel>
+              <TimePicker
+                label="To"
+                value={end}
+                onChange={handleChangeEnd}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+      
+            <FormLabel sx = {{marginTop: 2, marginBottom: 2}}>Choose your courses</FormLabel>
+            <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+            <Select
+              labelId="courseId"
+              id="id"
+              multiple
+              value={courseName}
+              onChange={handleCourseChange}
+              input={<OutlinedInput id="id" label="Courses" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {courseList.map((course) => (
+                <MenuItem
+                  key={course}
+                  value={course}
+                  style={getStyles(course, courseName, theme)}
+                >
+                  {course}
+                </MenuItem>
+              ))}
+            </Select>
   
-          <Button variant="contained" type="submit">
+          <Button sx = {{marginTop: 2, marginBottom: 2}} variant="contained" type="submit">
             Add Session
           </Button>
         </Box>

@@ -1,10 +1,10 @@
 const courseList = [
-    { title: 'FMCG Sales' },
-    { title: 'Equity Research' },
-    { title: 'Digital Marketing' },
-    { title: 'Computer Science' },
-    { title: 'HR Management' },
-    { title: 'Electronics' },
+    'FMCG Sales' ,
+    'Equity Research' ,
+    'Digital Marketing' ,
+    'Computer Science' ,
+    'HR Management',
+    'Electronics',
   ];
 
   export default courseList;
